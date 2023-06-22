@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection as lc
+l3c=mplot3d.art3d.Line3DCollection
 
 def dsim(m):
     '''This function creates a dissimilarity matrix using
