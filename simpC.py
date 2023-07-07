@@ -7,6 +7,29 @@ import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection as lc
 l3c=mplot3d.art3d.Line3DCollection
 
+
+def met(iter, bcent=0.2,xbound=5,mu=0,sig=1):
+        states=[]
+
+        x=[]
+
+        burn_in=int(iter*bcent)
+
+        normalDist= lambda x : (np.exp((-(x-mu)**2)/(2*sig**2)))/(sig * np.sqrt(2*np.pi))
+        nextState= lambda x : rnd.uniform(-xbound*sig+mu,xbound*sig+mu)
+        unif= lambda : rnd.uniform(0,1)
+        c=nextState(xbound)
+        for i in range(iter):
+            states.append(c)
+            m=nextState(xbound)
+            cProb=normalDist(c)
+            mProb=normalDist(m)
+            accept=min(mProb/cProb,1)
+            if unif()<=accept:
+                c=m
+        x=states[burn_in:]
+        return x
+
 def dsim(m):
     '''This function creates a dissimilarity matrix using
      the Euclidean distance metric from a M*N point cloud matrix'''
